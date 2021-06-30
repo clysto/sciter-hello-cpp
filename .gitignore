@@ -1,0 +1,5 @@
+.vscode
+*.o
+hello-cpp
+resources.cpp
+.envrc

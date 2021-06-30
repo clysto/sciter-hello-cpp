@@ -1,0 +1,22 @@
+<html window-width="400dip" window-height="600dip" window-resizable="true">
+  <head>
+    <title>Hello</title>
+    <style>
+      html {
+        width: 100dip;
+        background-color: white;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <script>
+      document.ready = function () {
+        const thisWindow = Window.this;
+        document.querySelector('#title').innerText =
+          thisWindow.frame.nativeMessage();
+      };
+    </script>
+  </body>
+</html>
