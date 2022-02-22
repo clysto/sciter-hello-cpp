@@ -22,6 +22,11 @@ int main(int argc, const char * argv[])
   NSArray *tl;
   auto mb = [NSBundle mainBundle];
   [mb loadNibNamed:@"MainMenu" owner:application topLevelObjects:&tl];
+
+  [application setActivationPolicy:NSApplicationActivationPolicyRegular];
+  
+  //SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_CG);
+  SciterSetOption(NULL, SCITER_SET_GFX_LAYER, GFX_LAYER_SKIA_OPENGL);
     
   for( int i = 0; i < argc; ++i ) {
       aux::a2w w(argv[i]);
@@ -29,8 +34,6 @@ int main(int argc, const char * argv[])
   }
     
   auto message_pump = [&]() -> int {
-    // 在 dock 栏里显示
-    [application setActivationPolicy:NSApplicationActivationPolicyRegular];
     [application run];
     return 0;
   };
@@ -68,10 +71,19 @@ namespace sciter {
     if(_hwnd) [nswindow(_hwnd) makeKeyAndOrderFront:nil];
   }    
 
-  void window::dismiss() {
-    if(_hwnd) [nswindow(_hwnd) performClose: nswindow(_hwnd)];
+  void window::request_close() {
+      if(_hwnd) {
+          NSWindow* pw = nswindow(_hwnd);
+          if(pw) [pw performClose: pw];
+      }
     _hwnd = 0;
   }
+
+  void window::close() {
+    if(_hwnd) [nswindow(_hwnd) close];
+    _hwnd = 0;
+  }
+
 
   window::window( UINT creationFlags, RECT frame): _hwnd(NULL)
   {

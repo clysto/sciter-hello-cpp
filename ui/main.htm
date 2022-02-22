@@ -4,19 +4,50 @@
     <style>
       html {
         width: 100dip;
-        background-color: white;
-        color: black;
+        background-color: #23272e;
+        color: white;
+        padding: 2em;
+        vertical-scrollbar: my-v-scrollbar;
+      }
+      @set my-v-scrollbar {
+        .prev,
+        .next {
+          display: none;
+        }
+        .slider {
+          background: #343944;
+          margin: 0 8dip;
+          border: 0;
+        }
+        .slider:active {
+          background: #4b5260;
+        }
+        .base {
+          width: 8dip;
+        }
+        .corner {
+          background: transparent;
+        }
       }
     </style>
   </head>
   <body>
     <h1 id="title"></h1>
+    <div id="test"></div>
     <script>
       document.ready = function () {
         const thisWindow = Window.this;
         document.querySelector('#title').innerText =
           thisWindow.frame.nativeMessage();
       };
+      const test = document.querySelector('#test');
+      for (let i = 0; i < 10; i++) {
+        let t = document.createElement('p');
+        for (let i = 0; i < 100; i++) {
+          t.innerText += 'hello world, ';
+        }
+        test.appendChild(t);
+      }
     </script>
   </body>
 </html>
